@@ -61,7 +61,7 @@ public class SelenideTest {
         }
 
         // Отправка результата в Better Stack
-        sendResultToBetterStack(result, "WKc9XeKavCgYQP5NkpEMBM98");
+        sendResultToBetterStack(result, System.getenv("BETTER_STACK_API_TOKEN"));
     }
 
     public static void sendResultToBetterStack(boolean result, String apiToken) {
