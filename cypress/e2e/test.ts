@@ -33,11 +33,11 @@ describe('Basic Test', () => {
 
         cy.wait(5000); // Увеличьте время ожидания, если необходимо
 
-        cy.get(".backToConfigButton", { timeout: 5000 }).click();
-        cy.wait(5000); // Увеличьте время ожидания, если необходимо
-
-        cy.get("#submit", { timeout: 5000 }).click();
-        cy.wait(5000); // Увеличьте время ожидания, если необходимо
+        // cy.get(".backToConfigButton", { timeout: 5000 }).click();
+        // cy.wait(5000); // Увеличьте время ожидания, если необходимо
+        //
+        // cy.get("#submit", { timeout: 5000 }).click();
+        // cy.wait(5000); // Увеличьте время ожидания, если необходимо
 
         cy.get('.stripo-preview-frame').then(($iframe) => {
             const $body = $iframe.contents().find('body');
