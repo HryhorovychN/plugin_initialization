@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 const reportStatus = async (status) => {
-    const apiKey = 'your_betterstack_api_key';
-    const monitorId = 'your_betterstack_monitor_id';
+    const apiKey = 'WKc9XeKavCgYQP5NkpEMBM98';
+    const monitorId = '2455345';
 
     try {
         await axios.post(`https://uptime.betterstack.com/api/v1/monitors/${monitorId}/heartbeat`, null, {
