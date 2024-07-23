@@ -1,5 +1,6 @@
 package com.example;
 
+import com.codeborne.selenide.AuthenticationType;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selenide.*;
@@ -19,19 +20,18 @@ public class SelenideTest {
     public void runTest() {
         // Настройка Selenide
         WebDriverManager.chromedriver().setup();
-        Configuration.browser = "chrome";
-        Configuration.headless = true;
+        Configuration.browser = "firefox";
+        Configuration.headless = false;  // для отладки лучше отключить headless
         Configuration.baseUrl = "https://stage-plugins-third-party.stripo.email/";
 
         boolean result = false;
         try {
             // Переход на сайт с базовой аутентификацией
-            String url = "https://monitoring:lksh8UHHKns@stage-plugins-third-party.stripo.email/";
-            open(url);
+            open("/", AuthenticationType.BASIC, "monitoring", "lksh8UHHKns");
 
             // Выполнение сценария
             $(By.cssSelector(".backToConfigButton")).shouldBe(visible).click();
-            sleep(3000);
+            sleep(1000);
 
             $(By.id("uiEditorToUseChoice4")).click();
             $(By.id("useHtmlAndCssChoice")).click();
@@ -49,7 +49,7 @@ public class SelenideTest {
             $(By.id("htmlUrlValue")).setValue("/v1/proxy?url=https://stripoeditor.stripocdnplugin.email/content/stripoeditor/template/template4.html");
             $(By.id("cssUrlValue")).setValue("/v1/proxy?url=https://stripoeditor.stripocdnplugin.email/content/stripoeditor/template/template5.css");
             $(By.id("submit")).click();
-            sleep(10000);
+            sleep(1000);
 
             // Проверка существования элементов
             $("#stripoSettingsContainer").should(exist);
@@ -65,7 +65,7 @@ public class SelenideTest {
     }
 
     public static void sendResultToBetterStack(boolean result, String apiToken) {
-        String url = "https://uptime.betterstack.com/api/v1/monitoring/checks/<your_check_id>/results";
+        String url = "https://uptime.betterstack.com/api/v1/monitoring/checks/2455345/results";
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
 
