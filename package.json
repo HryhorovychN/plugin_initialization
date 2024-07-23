@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "typescript": "^4.x.x",
+    "@cypress/webpack-preprocessor": "^5.x.x",
+    "ts-loader": "^9.x.x",
+    "webpack": "^5.x.x",
+    "cypress": "^10.x.x"
+  }
+}
