@@ -1,6 +1,7 @@
 package com.example;
 
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -10,20 +11,19 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SelenideTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void runTest() {
         // Настройка Selenide
+        WebDriverManager.chromedriver().setup();
         Configuration.browser = "chrome";
         Configuration.headless = true;
         Configuration.baseUrl = "https://stage-plugins-third-party.stripo.email/";
 
-        boolean result = runTest();
-        sendResultToBetterStack(result, "WKc9XeKavCgYQP5NkpEMBM98");
-    }
-
-    public static boolean runTest() {
+        boolean result = false;
         try {
             // Переход на сайт с базовой аутентификацией
             String url = "https://monitoring:lksh8UHHKns@stage-plugins-third-party.stripo.email/";
@@ -55,15 +55,17 @@ public class SelenideTest {
             $("#stripoSettingsContainer").should(exist);
             $("#previewPanel").should(exist);
             System.out.println("Test Passed");
-            return true;
+            result = true;
         } catch (Exception e) {
             System.out.println("Test Failed: " + e.getMessage());
-            return false;
         }
+
+        // Отправка результата в Better Stack
+        sendResultToBetterStack(result, "WKc9XeKavCgYQP5NkpEMBM98");
     }
 
     public static void sendResultToBetterStack(boolean result, String apiToken) {
-        String url = "https://uptime.betterstack.com/api/v1/monitoring/checks/243631/results";
+        String url = "https://uptime.betterstack.com/api/v1/monitoring/checks/<your_check_id>/results";
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
 
