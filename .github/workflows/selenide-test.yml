@@ -1,0 +1,28 @@
+name: Selenide Test
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # Каждые 10 минут
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install dependencies
+        run: mvn install
+
+      - name: Run Selenide test
+        env:
+          API_TOKEN: ${{ secrets.BETTER_STACK_API_TOKEN }}
+        run: mvn test
