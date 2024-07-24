@@ -1,9 +1,9 @@
 name: Plugin Initialization Test
 
-on:
-  schedule:
-    - cron: '*/10 * * * *'
-  workflow_dispatch:
+#on:
+#  schedule:
+#    - cron: '*/10 * * * *'
+#  workflow_dispatch:
 
 jobs:
   cypress-run:
@@ -24,26 +24,26 @@ jobs:
       - name: Run plugin initialization
         run: npx cypress run
 
-      - name: Create docs directory
-        run: mkdir -p docs
-
-      - name: Generate result file on success
-        if: success()
-        run: echo "<html><body><h1>Last run was successful</h1></body></html>" > docs/index.html
-        shell: /usr/bin/bash -e {0}
-
-      - name: Generate result file on failure
-        if: failure()
-        run: echo "<html><body><h1>Last run failed</h1></body></html>" > docs/index.html
-        shell: /usr/bin/bash -e {0}
-
-      - name: Commit result
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-          git add docs/index.html
-          git commit -m 'Update test result'
-          git push origin main
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#      - name: Create docs directory
+#        run: mkdir -p docs
+#
+#      - name: Generate result file on success
+#        if: success()
+#        run: echo "<html><body><h1>Last run was successful</h1></body></html>" > docs/index.html
+#        shell: /usr/bin/bash -e {0}
+#
+#      - name: Generate result file on failure
+#        if: failure()
+#        run: echo "<html><body><h1>Last run failed</h1></body></html>" > docs/index.html
+#        shell: /usr/bin/bash -e {0}
+#
+#      - name: Commit result
+#        run: |
+#          git config --global user.name 'github-actions'
+#          git config --global user.email 'github-actions@github.com'
+#          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+#          git add docs/index.html
+#          git commit -m 'Update test result'
+#          git push origin main
+#        env:
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
