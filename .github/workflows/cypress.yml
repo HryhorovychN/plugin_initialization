@@ -39,7 +39,10 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           git add docs/index.html
           git commit -m 'Update test result'
           git push
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         if: success() || failure()
