@@ -1,6 +1,5 @@
-name: Cypress Tests
+name: Plugin Initialization Test
 
- Настройка расписания для выполнения действия каждые 10 минут
 on:
   schedule:
     - cron: '*/10 * * * *'
@@ -22,7 +21,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Cypress tests
+      - name: Run plugin initialization
+        run: npx cypress run
+
+      - name: Generate result file on success
+        run: echo "<html><body><h1>Last run was successful</h1></body></html>" > docs/index.html
+        if: success()
+
+      - name: Generate result file on failure
+        run: echo "<html><body><h1>Last run failed</h1></body></html>" > docs/index.html
+        if: failure()
+
+      - name: Commit result
         run: |
-          npx cypress run || STATUS='down'
-      
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add docs/index.html
+          git commit -m 'Update test result'
+          git push
+        if: success() || failure()
