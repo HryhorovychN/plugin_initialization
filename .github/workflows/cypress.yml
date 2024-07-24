@@ -24,6 +24,9 @@ jobs:
       - name: Run plugin initialization
         run: npx cypress run
 
+      - name: Create docs directory
+        run: mkdir -p docs
+
       - name: Generate result file on success
         if: success()
         run: echo "<html><body><h1>Last run was successful</h1></body></html>" > docs/index.html
